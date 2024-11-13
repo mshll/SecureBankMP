@@ -28,6 +28,14 @@ public class AuthServiceImpl implements AuthService{
         this.jwtUtil = jwtUtil;
     }
 
+    /*
+    - It checks that the **`username`** and **`password`** in the **`authenticationRequest`** are not null or empty using the **`requiredNonNull`** method.
+    - It converts the **`username`** to lowercase (standardizing it).
+    - It calls the **`authenticate`** method to perform user authentication using Spring Security's **`AuthenticationManager`**.
+    - It loads user details using the **`userDetailsService`**.
+    - It generates an access token using the **`jwtUtil`**.
+    - Finally, it constructs an **`AuthenticationResponse`** object with the user details and access token and returns it.
+     */
     @Override
     public AuthenticationResponse login(CreateLoginRequest authenticationRequest) {
         requiredNonNull(authenticationRequest.getUsername(), "username");
