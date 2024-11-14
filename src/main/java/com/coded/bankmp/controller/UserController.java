@@ -1,5 +1,6 @@
 package com.coded.bankmp.controller;
 
+import com.coded.bankmp.bo.TransactionResponse;
 import com.coded.bankmp.bo.UpdateUserProfileRequest;
 import com.coded.bankmp.bo.UserResponse;
 import com.coded.bankmp.bo.UserResponse;
@@ -7,6 +8,7 @@ import com.coded.bankmp.entity.UserEntity;
 import com.coded.bankmp.repository.UserRepository;
 import com.coded.bankmp.service.UserService;
 import com.coded.bankmp.service.auth.AuthServiceImpl;
+import com.coded.bankmp.util.TransactionType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -54,11 +56,18 @@ public class UserController {
     @GetMapping("/profile")
     public ResponseEntity<UserResponse> getProfile() {
         UserEntity userEntity = authServiceImpl.getAuthenticatedUser();
-        
+
         if (userEntity != null) {
             return ResponseEntity.status(HttpStatus.OK).body(new UserResponse(userEntity));
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
+    }
+
+    @PostMapping("/transaction/{type}/{amount}")
+    public ResponseEntity<TransactionResponse> makeTransaction(@PathVariable("type") String type, @PathVariable("amount") Double amount) {
+        UserEntity userEntity = authServiceImpl.getAuthenticatedUser();
+        TransactionResponse transactionResponse = userService.makeTransaction(amount, TransactionType.valueOf(type.toUpperCase()), userEntity);
+        return ResponseEntity.status(HttpStatus.CREATED).body(transactionResponse);
     }
 }
