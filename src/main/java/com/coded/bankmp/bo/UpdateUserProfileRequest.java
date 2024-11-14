@@ -1,25 +1,19 @@
 package com.coded.bankmp.bo;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
+public class UpdateUserProfileRequest {
 
-@JsonInclude(JsonInclude.Include.NON_NULL)
-public class CreateUserRequest {
+    private String username;
     private String email;
     private String phone;
     private String address;
     private String password;
-    private String role;
 
-    public CreateUserRequest() {
-        // Default constructor
+    public String getUsername() {
+        return username;
     }
 
-    public CreateUserRequest(String email, String phone, String address, String password, String role) {
-        this.email = email;
-        this.phone = phone;
-        this.address = address;
-        this.password = password;
-        this.role = role;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public String getEmail() {
@@ -52,13 +46,5 @@ public class CreateUserRequest {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
     }
 }

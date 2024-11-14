@@ -54,13 +54,13 @@ public class JwtAuthFilter extends OncePerRequestFilter {
             if (jwtUtil.isTokenValid(token)) {
 
                 // If the token is valid, it extracts the username from the token using the jwtUtil.getUsernameFromToken(token) method. If the username is null, it throws a UserNotFoundException.
-                String usernmae = jwtUtil.getUsernameFromToken(token);
-                if (usernmae == null) {
+                String username = jwtUtil.getUsernameFromToken(token);
+                if (username == null) {
                     throw new UserNotFoundException("user not found");
                 }
 
                 // It loads user details (including roles and permissions) from the database using the userDetailsService. This is done by calling userDetailsService.loadUserByUsername(username).
-                UserDetails userDetails = userDetailsService.loadUserByUsername(usernmae);
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
 
 
                 // This line creates an Authentication object (UsernamePasswordAuthenticationToken) with the user details and authorities (roles and permissions) obtained from the database.

@@ -5,12 +5,17 @@ import com.coded.bankmp.bo.auth.CreateLoginRequest;
 import com.coded.bankmp.bo.auth.LogoutResponse;
 import com.coded.bankmp.bo.CustomUserDetails;
 import com.coded.bankmp.config.JWTUtil;
+import com.coded.bankmp.entity.UserEntity;
 import com.coded.bankmp.exception.BodyGuardException;
 import com.coded.bankmp.exception.UserNotFoundException;
+import com.coded.bankmp.repository.RoleRepository;
+import com.coded.bankmp.repository.UserRepository;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -22,10 +27,13 @@ public class AuthServiceImpl implements AuthService {
 
     private final JWTUtil jwtUtil;
 
-    public AuthServiceImpl(AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService, JWTUtil jwtUtil) {
+    private final UserRepository userRepository;
+
+    public AuthServiceImpl(AuthenticationManager authenticationManager, CustomUserDetailsService userDetailsService, JWTUtil jwtUtil, UserRepository userRepository) {
         this.authenticationManager = authenticationManager;
         this.userDetailsService = userDetailsService;
         this.jwtUtil = jwtUtil;
+        this.userRepository = userRepository;
     }
 
     /*
@@ -80,5 +88,12 @@ public class AuthServiceImpl implements AuthService {
         } catch (AuthenticationServiceException e) {
             throw new UserNotFoundException("Incorrect username");
         }
+    }
+
+    @Override
+    public UserEntity getAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+        return userRepository.findByUsername(username).orElse(null);
     }
 }

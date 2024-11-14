@@ -29,7 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         userDetails.setId(user.getId());
         userDetails.setUserName(user.getUsername());
         userDetails.setPassword(user.getPassword());
-        userDetails.setRole(user.getRole());
+        userDetails.setRole(user.getRole().getTitle().toString());
 
         return userDetails;
     }

@@ -25,8 +25,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     These lines declare constant strings AUTH_PATH and USER_PATH, representing the paths related to authentication and user-related resources, respectively.
      */
     public static final String AUTH_PATH = "/api/v1/auth/**";
-    public static final String ADMIN_PATH = "/api/v1/admin-dashboard/**";
-    public static final String USER_PATH = "/api/v1/nice-worlds/**";
+    public static final String ADMIN_PATH = "/api/v1/admin/**";
+    public static final String USER_PATH = "/api/v1/user/**";
 
     /*
     These lines declare two lists of strings, ALLOWED_METHODS and ALLOWED_HEADERS. These lists specify the HTTP methods and headers allowed for CORS (Cross-Origin Resource Sharing) configuration.
