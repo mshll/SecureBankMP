@@ -125,6 +125,7 @@ public class UserServiceImpl implements UserService {
         transactionEntity.setAmount(amount);
         transactionEntity.setCreateTime(LocalDateTime.now());
         transactionEntity.setTransactionType(type);
+        transactionEntity.setBankAccount(bankAccountEntity);
 
         if (type == TransactionType.DEPOSIT) {
             bankAccountEntity.setBalance(bankAccountEntity.getBalance() + amount);
